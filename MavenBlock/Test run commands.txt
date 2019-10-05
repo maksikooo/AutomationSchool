@@ -1,0 +1,4 @@
+
+mvn test -Dtest="*" -DthreadCount=2
+mvn test -Dtest="ApiForMavenTest" -DthreadCount=2
+mvn test -Dtest="UiForMavenTest" -DthreadCount=2
