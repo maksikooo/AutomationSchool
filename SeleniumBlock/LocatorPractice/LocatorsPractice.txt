@@ -1,0 +1,6 @@
+findElements(By.xpath("//form[@name='site-search']/.//input[@type='submit']"))
+findElements(By.id("searchDropdownBox"))
+findElement(By.id("searchDropdownBox")).findElements(By.xpath(".//option[text()='Baby']"))
+findElements(By.linkText("Sell"))
+findElements(By.xpath("//a/i[@class='a-icon a-icon-next-rounded']"))
+findElements(By.xpath("//div/div[@class='a-section as-title-block']/h2/span"))
