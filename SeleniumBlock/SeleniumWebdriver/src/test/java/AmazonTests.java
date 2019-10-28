@@ -68,6 +68,7 @@ public class AmazonTests {
                 driver.findElement(By.id("nav-cart")).click();
             }else
                 driver.findElement(By.id("attach-sidesheet-view-cart-button-announce")).click();
+            Assert.assertTrue("Item not added to cart(options not selected)",!driver.findElements(By.id("sc-subtotal-amount-activecart")).isEmpty());
             subTotalPrice = Float.parseFloat(driver.findElement(By.id("sc-subtotal-amount-activecart")).getText().substring(1));
             Assert.assertEquals(itemPrice, subTotalPrice,0f);
             itemTitleFromCart = driver.findElement(By.className("sc-product-title")).getText();
