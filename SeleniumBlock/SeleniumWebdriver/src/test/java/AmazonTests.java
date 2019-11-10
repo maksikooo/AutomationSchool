@@ -21,6 +21,7 @@ public class AmazonTests {
         private ArrayList<Integer> itemIndexes = new ArrayList<Integer>();
         private String searchString;
         private WebDriver driver;
+
         public ParameterizeTest(String searchString) {
             this.searchString = searchString;
         }
@@ -44,7 +45,7 @@ public class AmazonTests {
             float itemPrice, subTotalPrice;
             String itemTitle, itemTitleFromCart;
             driver.get("https://www.amazon.com/");
-            driver.findElement(By.id("searchDropdownBox")).findElement(By.xpath(".//option[text()='Baby']")).click();
+            driver.findElement(By.xpath("//select[@id='searchDropdownBox']//option[text()='Baby']")).click();
             driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchString);
             driver.findElement(By.xpath("//form[@name='site-search']/.//input[@type='submit']")).click();
             Assert.assertTrue("Title not match",driver.getTitle().toLowerCase().contains(searchString));
