@@ -13,17 +13,17 @@ public class ItemPage {
     }
 
     public CartPage goToCart() {
-        if(!driver.findElements(By.id("nav-cart")).isEmpty()) {
+        if (!driver.findElements(By.id("nav-cart")).isEmpty()) {
             driver.findElement(By.id("nav-cart")).click();
-        }else
+        } else
             driver.findElement(By.id("attach-sidesheet-view-cart-button-announce")).click();
         return new CartPage(driver);
     }
 
-    public boolean itemAddedCheck(){
-        if(driver.findElements(By.id("sc-subtotal-amount-activecart")).isEmpty()){
+    public boolean itemAddedCheck() {
+        if (driver.findElements(By.id("sc-subtotal-amount-activecart")).isEmpty()) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }

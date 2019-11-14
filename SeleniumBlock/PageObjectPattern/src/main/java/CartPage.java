@@ -2,7 +2,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
-
 public class CartPage {
     private final WebDriver driver;
     private float itemPrice;

@@ -1,3 +1,4 @@
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,6 +7,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Every.everyItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,14 +30,14 @@ public class AmazonTest {
         String itemTitle;
 
 
-        public ParameterizeTest(String searchString){
+        public ParameterizeTest(String searchString) {
             this.searchString = searchString;
         }
 
         @Parameterized.Parameters()
-        public static Iterable<Object> dataForTest(){
+        public static Iterable<Object> dataForTest() {
             return Arrays.asList(new Object[]{
-                "puzzle","sock","robe"});
+                   "puzzle", "sock", "robe"});
         }
 
         @Before
@@ -49,23 +54,21 @@ public class AmazonTest {
             HomePage home = new HomePage(driver);
             home.changeCategory(category);
             searchPage = home.searchFor(searchString);
-            Assert.assertTrue("Title not match", searchPage.getTitle().toLowerCase().contains(searchString));
+            assertThat(searchPage.getTitle().toLowerCase(), containsString(searchString));
             itemsTitle = searchPage.getItemsTitle();
-            for (String itemTitle : itemsTitle) {
-                try {
-                    Assert.assertTrue(itemTitle.toLowerCase().contains(searchString));
-                } catch (AssertionError e) {
-                    System.out.println("Item title not contains " + searchString + ":" + itemTitle);
-                }
+            try {
+                assertThat(itemsTitle, everyItem(containsString(searchString)));
+            } catch (AssertionError e) {
+                System.out.println(e);
             }
-            itemTitle = searchPage.getItemTitle(0);
-            itemPrice = searchPage.getItemPrice(0);
-            itemPage = searchPage.goToItemPage(0);
+            itemTitle = searchPage.getItemTitle(1);
+            itemPrice = searchPage.getItemPrice(1);
+            itemPage = searchPage.goToItemPage(1);
             itemPage.addToCart();
             cartPage = itemPage.goToCart();
-            Assert.assertTrue("Item not added to cart(options not selected)", itemPage.itemAddedCheck());
-            Assert.assertEquals(itemPrice, cartPage.getItemPrice(), 0f);
-            Assert.assertEquals("Item title from cart not match search page item title", itemTitle, cartPage.getItemTitle());
+            assertThat(itemPage.itemAddedCheck(), is(true));
+            assertThat(itemPrice,is(equalTo(cartPage.getItemPrice())));
+            assertThat(itemTitle,is(equalTo(cartPage.getItemTitle())));
         }
 
 

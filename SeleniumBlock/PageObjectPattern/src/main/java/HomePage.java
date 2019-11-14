@@ -7,16 +7,16 @@ public class HomePage {
     private WebDriver driver;
     private String category;
 
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void changeCategory(String category) {
-    this.category = category;
-    driver.findElement(By.xpath("//select[@id='searchDropdownBox']//option[text()='"+category+"']")).click();
+        driver.findElement(By.xpath("//select[@id='searchDropdownBox']//option[text()='" + category + "']")).click();
 
     }
-    public SearchPage searchFor(String searchString){
+
+    public SearchPage searchFor(String searchString) {
         driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchString);
         driver.findElement(By.xpath("//form[@name='site-search']/.//input[@type='submit']")).click();
         return new SearchPage(driver);

@@ -2,54 +2,49 @@ import java.util.ArrayList;
 
 
 import org.openqa.selenium.*;
+
 public class SearchPage {
     private WebDriver driver;
-    private ArrayList<String > itemsTitles = new ArrayList<String>();
-    private ArrayList<Integer>itemsIndexes = new ArrayList<Integer>();
+    private ArrayList<String> itemsTitles = new ArrayList<String>();
+    private ArrayList<Integer> itemsIndexes = new ArrayList<Integer>();
 
-    public SearchPage (WebDriver driver){
+    public SearchPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public int itemsCount(){
+    public int itemsCount() {
         return driver.findElements(By.xpath("//div[@data-index]")).size();
     }
 
-    private ArrayList<Integer> findItemsIndexes(){ // костыль для обхода рандомных каруселей
-        for (int i = 0;i < itemsCount();i++) {
-            if (!driver.findElements(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='" + i + "']//a[@class='a-link-normal a-text-normal']")).isEmpty()) {
-                itemsIndexes.add(i);
-            }
-        }
-        return itemsIndexes;
+
+    public String getItemTitle(int itemNumber) {
+        return driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//a[@class='a-link-normal a-text-normal']", itemNumber))).getText();
     }
 
-    public String getItemTitle(int itemNumber){
-        itemNumber = findItemsIndexes().get(itemNumber);
-        return driver.findElement(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='" + itemNumber + "']//a[@class='a-link-normal a-text-normal']")).getText();
+    public float getItemPrice(int itemNumber) {
+        // потратил какое то количество времени на то что пофиксить .getText() возвращал Null,это из за того что span скрыт с помощью css? правильно я понял?
+        return Float.parseFloat(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']", itemNumber))).getAttribute("innerHTML").replaceAll("\\$", ""));
     }
 
-    public float getItemPrice(int itemNumber){
-        itemNumber = findItemsIndexes().get(itemNumber);
-        return Float.parseFloat(driver.findElement(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='"+itemNumber+"']//span[@class='a-price-whole']")).getText()) + Float.parseFloat("0." + driver.findElement(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='"+itemNumber+"']//span[@class='a-price-fraction']")).getText());
+
+    private int itemsCountOnPage() {
+        return driver.findElements(By.xpath("//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS']")).size();
     }
 
     public ArrayList<String> getItemsTitle() {
-
-        for (int i = 0;i < itemsCount();i++){
-            if(!driver.findElements(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='" + i + "']//a[@class='a-link-normal a-text-normal']")).isEmpty()){
-                itemsTitles.add(driver.findElement(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='" + i + "']//a[@class='a-link-normal a-text-normal']")).getText());
-            }
+        System.out.println(itemsCountOnPage());
+        for (int i = 1; i <= itemsCountOnPage(); i++) {
+            itemsTitles.add(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//a[@class='a-link-normal a-text-normal']", i))).getText().toLowerCase());
         }
         return itemsTitles;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return driver.getTitle().toLowerCase();
     }
 
-    public ItemPage goToItemPage(int i ) {
-        driver.findElement(By.xpath("//div[@class='s-result-list s-search-results sg-row']/div[@data-index='"+i+"']//a[@class='a-link-normal a-text-normal']")).click();
+    public ItemPage goToItemPage(int i) {
+        driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//a[@class='a-link-normal']", i))).click();
         return new ItemPage(driver);
     }
 }
