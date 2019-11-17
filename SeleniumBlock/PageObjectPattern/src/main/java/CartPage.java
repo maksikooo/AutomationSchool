@@ -1,21 +1,26 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class CartPage {
     private final WebDriver driver;
-    private float itemPrice;
+    private final ArrayList<ProductItem> productItems;
 
-    public CartPage(WebDriver driver) {
+    public CartPage(WebDriver driver, ArrayList<ProductItem> productItems) {
         this.driver = driver;
+        this.productItems = productItems;
     }
 
-    public float getItemPrice() {
-        itemPrice = Float.parseFloat(driver.findElement(By.id("sc-subtotal-amount-activecart")).getText().substring(1));
-        return itemPrice;
+    public void compareItemTitle(int i) {
+        assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), containsString(productItems.get(i - 1).getItemName()));
     }
 
-    public String getItemTitle() {
-        return driver.findElement(By.className("sc-product-title")).getText();
+    public void compareItemPrice(int i) {
+        assertThat(Float.parseFloat(driver.findElement(By.id("sc-subtotal-amount-activecart")).getText().replaceAll("\\$", "")), is(equalTo(productItems.get(i - 1).getItemPrice())));
     }
 }
