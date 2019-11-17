@@ -13,15 +13,26 @@ public class AmazonTest {
     @RunWith(Parameterized.class)
     public static class ParameterizeTest {
         private String searchString;
+        private int itemNumber;
         private WebDriver driver;
         String category = "Baby";
         SearchPage searchPage;
         CartPage cartPage;
         ItemPage itemPage;
 
-        public ParameterizeTest(String searchString) {
+        public ParameterizeTest(String searchString, int itemNumber) {
             this.searchString = searchString;
+            this.itemNumber = itemNumber;
         }
+
+//        @Parameterized.Parameters()
+//        public static Iterable<Object[]> dataForTest() {
+//            return Arrays.asList(new Object[][]{
+//                    {"puzzle", 1},{"sock",1},{"robe",1},
+//                    {"puzzle", 2},{"sock",2},{"robe",2},
+//                    {"puzzle", 3},{"sock",3},{"robe",3}
+//                    });
+//        }
 
         @Parameterized.Parameters()
         public static Iterable<Object> dataForTest() {
@@ -43,11 +54,11 @@ public class AmazonTest {
             searchPage = home.searchFor(searchString);
             searchPage.pageTitleContainsSearchRequest(searchString);
             searchPage.itemsTitleHasSearchRequest(searchString);
-            itemPage = searchPage.goToItemPage(1);
+            itemPage = searchPage.goToItemPage(itemNumber);
             itemPage.addToCart();
             cartPage = itemPage.goToCart();
-            cartPage.compareItemTitle(1);
-            cartPage.compareItemPrice(1);
+            cartPage.compareItemTitle(itemNumber);
+            cartPage.compareItemPrice(itemNumber);
         }
 
         @After
