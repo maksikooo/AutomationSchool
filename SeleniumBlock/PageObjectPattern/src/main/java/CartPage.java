@@ -21,6 +21,6 @@ public class CartPage {
     }
 
     public void compareItemPrice(int i) {
-        assertThat(Float.parseFloat(driver.findElement(By.id("sc-subtotal-amount-activecart")).getText().replaceAll("\\$", "")), is(equalTo(productItems.get(i - 1).getItemPrice())));
+        assertThat(ProductUtils.parsePrice(driver.findElement(By.xpath("//span[@id='sc-subtotal-amount-activecart']/span[contains(@class,'sc-price')]"))),equalTo(productItems.get(i - 1).getItemPrice()));
     }
 }
