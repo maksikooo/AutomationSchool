@@ -25,22 +25,23 @@ public class AmazonTest {
             this.itemNumber = itemNumber;
         }
 
-//        @Parameterized.Parameters()
-//        public static Iterable<Object[]> dataForTest() {
-//            return Arrays.asList(new Object[][]{
-//                    {"puzzle", 1},{"sock",1},{"robe",1},
-//                    {"puzzle", 2},{"sock",2},{"robe",2},
-//                    {"puzzle", 3},{"sock",3},{"robe",3}
-//                    });
-//        }
-
         @Parameterized.Parameters()
-        public static Iterable<Object> dataForTest() {
-            return Arrays.asList(new Object[]{"puzzle", "sock", "robe"});
+        public static Iterable<Object[]> dataForTest() {
+            return Arrays.asList(new Object[][]{
+                    {"puzzle", 1},{"sock",1},{"robe",1},
+                    {"puzzle", 2},{"sock",2},{"robe",2},
+                    {"puzzle", 3},{"sock",3},{"robe",3}
+                    });
         }
+
+//        @Parameterized.Parameters()
+//        public static Iterable<Object> dataForTest() {
+//            return Arrays.asList(new Object[]{"puzzle", "sock", "robe"});
+//        }
 
         @Before
         public void setUp() {
+            System.setProperty("webdriver.chrome.driver","src/tools/chromedriver.exe");
             driver = new ChromeDriver();
             //driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(3, TimeUnit.SECONDS);

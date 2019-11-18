@@ -29,8 +29,8 @@ public class ItemPage {
     }
 
     public boolean canBeAddedToCart() {
-        if (driver.findElement(By.id("add-to-cart-button")).getCssValue("cursor").equals("not-allowed")) return false;
-        else return true;
+       return !driver.findElement(By.id("add-to-cart-button")).getCssValue("cursor").equals("not-allowed");  //идея предложила упростить тернарный оператор до такого,не так
+        // читабельно,но работает. Что скажешь?
     }
 
     public CartPage goToCart() {

@@ -9,13 +9,13 @@ public class HomePage {
     }
 
     public void changeCategory(String category) {
-        driver.findElement(By.xpath("//select[@id='searchDropdownBox']//option[text()='" + category + "']")).click();
+        driver.findElement(By.xpath(String.format("//select[@id='searchDropdownBox']//option[text()='%s']",category))).click();
 
     }
 
     public SearchPage searchFor(String searchString) {
         driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchString);
-        driver.findElement(By.xpath("//form[@name='site-search']/.//input[@type='submit']")).click();
+        driver.findElement(By.xpath("//form[@name='site-search']//input[@type='submit']")).click();
         return new SearchPage(driver);
     }
 }

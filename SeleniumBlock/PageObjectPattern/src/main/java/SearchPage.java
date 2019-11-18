@@ -5,9 +5,10 @@ import org.openqa.selenium.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+
 public class SearchPage {
     private WebDriver driver;
-    public ArrayList<ProductItem> productItems = new ArrayList<ProductItem>();
+    public ArrayList<ProductItem> productItems = new ArrayList<>();
 
     public SearchPage(WebDriver driver) {
         this.driver = driver;
@@ -23,20 +24,18 @@ public class SearchPage {
 
     public float getItemPrice(int i) {
         if (!driver.findElements(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']", i))).isEmpty()) {
-            // обработка случаев когда цена указана совесем по другому <span class="a-color-base" dir="auto">$13.99</span>
-            return Float.parseFloat(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']", i)))
-                    .getAttribute("innerHTML").replaceAll("\\$", ""));
+            return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']",
+                    i))));
         } else
-            return Float.parseFloat(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//div[@class='sg-col-inner']//span[@class='a-color-base']", i)))
-                    .getAttribute("innerHTML").replaceAll("\\$", ""));
+        return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-color-base']", i))));
     }
 
     public String getItemTitle(int i) {
-        return driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//a[@class='a-link-normal a-text-normal']", i))).getText().toLowerCase();
+        return driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[contains(@class,'a-size-base-plus')]", i))).getText().toLowerCase();
     }
 
     public WebElement getItemWebElement(int i) {
-        return driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//a[@class='a-link-normal a-text-normal']", i)));
+        return driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[contains(@class,'a-size-base-plus')]", i)));
     }
 
     // Интересно мнение,адекватно ли я реализовал хранение элемента в экземпляре класса ProductItem ? не переусложнил ли я его методом getItemWebElement
