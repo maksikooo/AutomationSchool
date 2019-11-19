@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
+
 
 import org.openqa.selenium.*;
 
@@ -24,18 +24,7 @@ public class SearchPage {
     }
 
     public float getItemPrice(int i) {
-        if (!driver.findElements(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']", i))).isEmpty()) {
-            return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']", i))));
-        } else
-            return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-color-base']", i))));
-
-
-//        как правильно поступить тут,т.к. я использую utils то локатор ищется внутри того класа ,поэтому ексепшен тут не ловит ошибку
-//        try {
-//            return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen']", i))));
-//        }catch (NoSuchElementException a){
-//            return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-color-base']", i))));
-//        }
+        return ProductUtils.parsePrice(driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[@class='a-offscreen' or @class='a-color-base']", i))));
     }
 
     public String getItemTitle(int i) {
@@ -46,8 +35,6 @@ public class SearchPage {
         return driver.findElement(By.xpath(String.format("(//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS'])[%d]//span[contains(@class,'a-size-base-plus')]", i)));
     }
 
-    // Интересно мнение,адекватно ли я реализовал хранение элемента в экземпляре класса ProductItem ? не переусложнил ли я его методом getItemWebElement
-    // Как правильно поступить что Массив с элементами не доступен из класса CartPage ,сейчас я решил это прокидыванием массива по классам до самой CartPage
     public void productItemsInitialization() {
         for (int i = 1; i <= itemsCountOnPage(); i++) {
             productItems.add(new ProductItem());
