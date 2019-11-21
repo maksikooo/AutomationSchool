@@ -12,8 +12,9 @@ public class ItemPage {
     ArrayList<ProductItem> productItems;
     private WebDriverWait wait;
 
-    public ItemPage(WebDriver driver) {
+    public ItemPage(WebDriver driver, ArrayList<ProductItem> productItems) {
         this.driver = driver;
+        this.productItems = productItems;
     }
 
     public void addToCart() {
@@ -37,6 +38,6 @@ public class ItemPage {
             wait.until(ExpectedConditions.elementToBeClickable(By.id("attach-sidesheet-view-cart-button")));
             driver.findElement(By.id("attach-sidesheet-view-cart-button")).click();
         } else driver.findElement(By.id("nav-cart")).click();
-        return new CartPage(driver);
+        return new CartPage(driver, productItems);
     }
 }

@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 import org.openqa.selenium.*;
@@ -16,7 +13,6 @@ public class SearchPage {
 
     public SearchPage(WebDriver driver) {
         this.driver = driver;
-        productItemsInitialization();
     }
 
     public void pageTitleContainsSearchRequest(String searchString) {
@@ -40,34 +36,27 @@ public class SearchPage {
     }
 
     public void productItemsInitialization() {
-        driver.findElements(By.xpath("//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS']")).stream().map(x-> productItems.add(new ProductItem(x))).collect(Collectors.toList());
-       // System.out.println(productItems1.size());
-//        for (int i = 1; i <= itemsCountOnPage(); i++) {
-//            productItems.add(new ProductItem());
-//            productItems.get(i - 1).setItemName(getItemTitle(i));
-//            productItems.get(i - 1).setItemPrice(getItemPrice(i));
-//            productItems.get(i - 1).setItemWebElement(getItemWebElement(i));
-//        }
-    }
-
-    public ArrayList<ProductItem> getProductItems(){
-        return productItems;
+        for (int i = 1; i <= itemsCountOnPage(); i++) {
+            productItems.add(new ProductItem());
+            productItems.get(i - 1).setItemName(getItemTitle(i));
+            productItems.get(i - 1).setItemPrice(getItemPrice(i));
+            productItems.get(i - 1).setItemWebElement(getItemWebElement(i));
+        }
     }
 
     public void itemsTitleHasSearchRequest(String searchString) {
-        productItems.stream().forEach(x-> assertThat(x.getItemName(),containsString(searchString)));
- // Внизу было ,вверху стало
-//        for (int i = 0; i < productItems.size(); i++) {
-//            try {
-//                assertThat(productItems.get(i).getItemName(), containsString(searchString));
-//            } catch (AssertionError e) {
-//                System.out.println(e);
-//            }
-//        }
+        productItemsInitialization();
+        for (int i = 0; i < productItems.size(); i++) {
+            try {
+                assertThat(productItems.get(i).getItemName(), containsString(searchString));
+            } catch (AssertionError e) {
+                System.out.println(e);
+            }
+        }
     }
 
-    public ItemPage goToItemPage(ProductItem productItem) {
-        productItem.getItemWebElement().click();
-        return new ItemPage(driver);
+    public ItemPage goToItemPage(int i) {
+        productItems.get(i - 1).getItemWebElement().click();
+        return new ItemPage(driver, productItems);
     }
 }

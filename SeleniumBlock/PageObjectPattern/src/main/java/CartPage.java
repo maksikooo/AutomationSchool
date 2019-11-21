@@ -9,16 +9,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CartPage {
     private final WebDriver driver;
+    private final ArrayList<ProductItem> productItems;
 
-    public CartPage(WebDriver driver) {
+    public CartPage(WebDriver driver, ArrayList<ProductItem> productItems) {
         this.driver = driver;
+        this.productItems = productItems;
     }
 
-    public void compareItemTitle(ProductItem productItem) {
-        assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), containsString(productItem.getItemName()));
+    public void compareItemTitle(int i) {
+        assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), containsString(productItems.get(i - 1).getItemName()));
     }
 
-    public void compareItemPrice(ProductItem productItem) {
-        assertThat(ProductUtils.parsePrice(driver.findElement(By.xpath("//span[@id='sc-subtotal-amount-activecart']/span[contains(@class,'sc-price')]"))),equalTo(productItem.getItemPrice()));
+    public void compareItemPrice(int i) {
+        assertThat(ProductUtils.parsePrice(driver.findElement(By.xpath("//span[@id='sc-subtotal-amount-activecart']/span[contains(@class,'sc-price')]"))),equalTo(productItems.get(i - 1).getItemPrice()));
     }
 }
