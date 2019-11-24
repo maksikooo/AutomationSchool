@@ -29,7 +29,7 @@ public class AmazonTest {
 
         @Parameterized.Parameters()
         public static Iterable<Object[]> dataForTest() {
-            return Arrays.asList(new Object[][]{{"puzzle", 1}, {"sock", 1}, {"robe", 1}, {"puzzle", 2}, {"sock", 2}, {"robe", 2}, {"puzzle", 3}, {"sock", 3}, {"robe", 3},{"puzzle", 1}, {"sock", 1}, {"robe", 1}, {"puzzle", 2}, {"sock", 2}, {"robe", 2}, {"puzzle", 3}, {"sock", 3}, {"robe", 3}});
+            return Arrays.asList(new Object[][]{{"puzzle", 1}, {"sock", 1}, {"robe", 1}, {"puzzle", 2}, {"sock", 2}, {"robe", 2}, {"puzzle", 3}, {"sock", 3}, {"robe", 3}});
         }
 
         @Before

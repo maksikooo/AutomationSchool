@@ -10,4 +10,8 @@ public class WaitUtils {
         } catch (TimeoutException ignored) {
         }
     }
+    public static void waitForElementCanBeClicked(WebDriver driver,WebElement element, int duration){
+        WebDriverWait wait = new WebDriverWait(driver, duration, 250);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
 }

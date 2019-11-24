@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import org.hamcrest.beans.HasProperty;
+
 import org.hamcrest.beans.HasPropertyWithValue;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -42,7 +43,10 @@ public class SearchPage {
     }
 
     public ItemPage goToItemPage(ProductItem productItem) {
-        System.out.println(productItem.getItemWebElement().toString());
+        Actions actions = new Actions(driver);
+        actions.moveToElement(productItem.getItemWebElement()).build().perform(); //Добавил т.к. иногда клик по элементу для перехода на его страницу не срабатывал,а после добавления
+        // этой строки стало реже падать.Когда падает то фокус не переводится на этот элемент.Пока не нашел способа это отдебажить
+        // 2 из 40 тестов упало без этой строки около половины
         productItem.getItemWebElement().click();
         return new ItemPage(driver);
     }
