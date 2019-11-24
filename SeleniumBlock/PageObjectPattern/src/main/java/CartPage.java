@@ -15,7 +15,11 @@ public class CartPage {
     }
 
     public void compareItemTitle(ProductItem productItem) {
-        assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), containsString(productItem.getItemName()));
+        try{
+            assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), equalTo(productItem.getItemName()));
+        }catch (AssertionError error){
+            error.printStackTrace();
+        }
     }
 
     public void compareItemPrice(ProductItem productItem) {

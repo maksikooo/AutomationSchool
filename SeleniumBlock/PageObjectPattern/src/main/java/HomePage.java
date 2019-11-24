@@ -14,6 +14,12 @@ public class HomePage {
     }
 
     public SearchPage searchFor(String searchString) {
+        //добавил задержку т.к. бывают случаи когда во время работы sendkeys() фокус менялся и ввод обрывался
+        try {
+            Thread.sleep(750);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchString);
         driver.findElement(By.xpath("//form[@name='site-search']//input[@type='submit']")).click();
         return new SearchPage(driver);
