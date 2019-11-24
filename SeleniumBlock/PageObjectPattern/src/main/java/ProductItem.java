@@ -1,9 +1,9 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-class ProductItem {
-    public String itemName;
-    float itemPrice;
+public class ProductItem {
+    private String itemName;
+    private float itemPrice;
     private WebElement webElement;
      ProductItem(WebElement element){
         webElement = element;
@@ -15,9 +15,9 @@ class ProductItem {
         return itemPrice;
     }
 
-    String getItemName() {
+    public String getItemName() {
         return itemName;
     }
 
-    public WebElement getItemWebElement(){ return webElement; }
+    WebElement getItemWebElement(){ return webElement; }
 }
