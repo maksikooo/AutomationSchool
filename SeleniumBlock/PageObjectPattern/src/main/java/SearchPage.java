@@ -5,9 +5,10 @@ import java.util.stream.Collectors;
 import org.hamcrest.beans.HasPropertyWithValue;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.everyItem;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -47,6 +48,7 @@ public class SearchPage {
         actions.moveToElement(productItem.getItemWebElement()).build().perform(); //Добавил т.к. иногда клик по элементу для перехода на его страницу не срабатывал,а после добавления
         // этой строки стало реже падать.Когда падает то фокус не переводится на этот элемент.Пока не нашел способа это отдебажить
         // 2 из 40 тестов упало без этой строки около половины
+        //UPD: добавил разворачивание хрома на весь экран,проблема пропала,но если буду тестировать элементы в конце списка например то может вернутся,
         productItem.getItemWebElement().click();
         return new ItemPage(driver);
     }

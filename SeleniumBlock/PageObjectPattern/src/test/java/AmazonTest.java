@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class AmazonTest {
     @RunWith(Parameterized.class)
@@ -29,15 +30,19 @@ public class AmazonTest {
 
         @Parameterized.Parameters()
         public static Iterable<Object[]> dataForTest() {
-            return Arrays.asList(new Object[][]{{"puzzle", 1}, {"sock", 1}, {"robe", 1}, {"puzzle", 2}, {"sock", 2}, {"robe", 2}, {"puzzle", 3}, {"sock", 3}, {"robe", 3}});
+            return Arrays.asList(new Object[][]{
+                    {"puzzle", 1}, {"sock", 1}, {"robe", 1}, {"puzzle", 2}, {"sock", 2}, {"robe", 2}, {"puzzle", 3}, {"sock", 3}, {"robe", 3}
+            });
+
         }
 
         @Before
         public void setUp() {
-            System.setProperty("webdriver.chrome.driver", "src/tools/chromedriver.exe");
-            String proxy = "213.159.204.205:65233";
-            ChromeOptions options = new ChromeOptions().addArguments("--proxy-server=http://" + proxy);
-            driver = new ChromeDriver(options);
+            //System.setProperty("webdriver.chrome.driver", "src/tools/chromedriver.exe");
+            //String proxy = "213.159.204.205:65233";
+            //ChromeOptions options = new ChromeOptions().addArguments("--proxy-server=http://" + proxy);
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
         }
 
 
