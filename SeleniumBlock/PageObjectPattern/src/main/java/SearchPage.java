@@ -44,12 +44,8 @@ public class SearchPage {
     }
 
     public ItemPage goToItemPage(ProductItem productItem) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(productItem.getItemWebElement()).build().perform(); //Добавил т.к. иногда клик по элементу для перехода на его страницу не срабатывал,а после добавления
-        // этой строки стало реже падать.Когда падает то фокус не переводится на этот элемент.Пока не нашел способа это отдебажить
-        // 2 из 40 тестов упало без этой строки около половины
-        //UPD: добавил разворачивание хрома на весь экран,проблема пропала,но если буду тестировать элементы в конце списка например то может вернутся,
-        productItem.getItemWebElement().click();
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);",productItem.getItemWebElement());
+        productItem.getItemWebElement().findElement(By.xpath(".//a")).click();
         return new ItemPage(driver);
     }
 }

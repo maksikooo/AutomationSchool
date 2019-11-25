@@ -38,11 +38,12 @@ public class AmazonTest {
 
         @Before
         public void setUp() {
-            //System.setProperty("webdriver.chrome.driver", "src/tools/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "src/tools/chromedriver.exe");
             //String proxy = "213.159.204.205:65233";
             //ChromeOptions options = new ChromeOptions().addArguments("--proxy-server=http://" + proxy);
             driver = new ChromeDriver();
             driver.manage().window().maximize();
+            driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
         }
 
 

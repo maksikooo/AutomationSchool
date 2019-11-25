@@ -19,7 +19,8 @@ public class ItemPage {
     public void changeSize() {
         driver.findElement(By.xpath("//span[@role='button']/span")).click();
         driver.findElement(By.xpath("//ul[@role='listbox']/li[2]")).click();
-        wait.until(ExpectedConditions.attributeToBe(By.id("add-to-cart-button"), "cursor", "pointer"));
+        //wait.until(ExpectedConditions.attributeToBe(By.id("add-to-cart-button"), "cursor", "pointer")); //StaleElementReferenceException
+        WaitUtils.waitUntilElementChangeAttribute(driver,By.id("add-to-cart-button"),"cursor","pointer");
         addToCart();
     }
 
@@ -30,13 +31,13 @@ public class ItemPage {
     }
 
     public boolean canBeAddedToCart() {
-        WaitUtils.waitForElementShow(driver,"add-to-cart-button",5);
+        WaitUtils.waitForElementShow(driver,By.id("add-to-cart-button"),5);
         return !driver.findElement(By.id("add-to-cart-button")).getCssValue("cursor").equals("not-allowed");  //idea предложила упростить тернарный оператор до такого,
         // не так читабельно,но работает. Что скажешь?
     }
 
     public CartPage goToCart() {
-        WaitUtils.waitForElementShow(driver,"attach-sidesheet-view-cart-button",4);
+        WaitUtils.waitForElementShow(driver,By.id("attach-sidesheet-view-cart-button"),4);
         try{
             driver.findElement(By.id("attach-sidesheet-view-cart-button")).isDisplayed();
             driver.findElement(By.id("attach-sidesheet-view-cart-button")).click();
