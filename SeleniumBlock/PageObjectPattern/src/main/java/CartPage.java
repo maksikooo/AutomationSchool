@@ -16,7 +16,7 @@ public class CartPage {
 
     public void compareItemTitle(ProductItem productItem) {
         try{
-            assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), equalTo(productItem.getItemName())); //NoSuchElementException
+            assertThat(driver.findElement(By.className("sc-product-title")).getText().toLowerCase(), equalTo(productItem.getItemName()));
         }catch (AssertionError error){
             error.printStackTrace();
         }

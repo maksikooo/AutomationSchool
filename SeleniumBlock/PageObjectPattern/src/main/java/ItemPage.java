@@ -19,7 +19,6 @@ public class ItemPage {
     public void changeSize() {
         driver.findElement(By.xpath("//span[@role='button']/span")).click();
         driver.findElement(By.xpath("//ul[@role='listbox']/li[2]")).click();
-        //wait.until(ExpectedConditions.attributeToBe(By.id("add-to-cart-button"), "cursor", "pointer")); //StaleElementReferenceException
         WaitUtils.waitUntilElementChangeAttribute(driver,By.id("add-to-cart-button"),"cursor","pointer");
         addToCart();
     }
@@ -32,8 +31,7 @@ public class ItemPage {
 
     public boolean canBeAddedToCart() {
         WaitUtils.waitForElementShow(driver,By.id("add-to-cart-button"),5);
-        return !driver.findElement(By.id("add-to-cart-button")).getCssValue("cursor").equals("not-allowed");  //idea предложила упростить тернарный оператор до такого,
-        // не так читабельно,но работает. Что скажешь?
+        return !driver.findElement(By.id("add-to-cart-button")).getCssValue("cursor").equals("not-allowed");
     }
 
     public CartPage goToCart() {

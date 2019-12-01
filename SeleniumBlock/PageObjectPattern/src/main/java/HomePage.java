@@ -1,11 +1,25 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
     private WebDriver driver;
 
+    @FindBy(id = "twotabsearchtextbox")
+    private WebElement searchFiled;
+
+    @FindBy(xpath = "//form[@name='site-search']//input[@type='submit']")
+    private WebElement searchButton;
+
+    public void initElements(WebDriver driver){
+        PageFactory.initElements(driver,this);
+    }
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
+        initElements(driver);
     }
 
     public void changeCategory(String category) {
@@ -14,14 +28,14 @@ public class HomePage {
     }
 
     public SearchPage searchFor(String searchString) {
-        //добавил задержку т.к. бывают случаи когда во время работы sendkeys() фокус менялся и ввод обрывался
+
         try {
             Thread.sleep(750);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchString);
-        driver.findElement(By.xpath("//form[@name='site-search']//input[@type='submit']")).click();
+        searchFiled.sendKeys(searchString);
+        searchButton.click();
         return new SearchPage(driver);
     }
 }
