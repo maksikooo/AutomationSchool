@@ -19,7 +19,8 @@ import static org.hamcrest.Matchers.is;
 
 public class SearchPage {
     private WebDriver driver;
-    public ArrayList<ProductItem> productItems = new ArrayList<>();
+    private ArrayList<ProductItem> productItems = new ArrayList<>();
+    private ArrayList<WebElement> productItems1 = new ArrayList<>();
 
     @FindBy(xpath = "//span[@cel_widget_id='SEARCH_RESULTS-SEARCH_RESULTS']")
     private List<WebElement> searchResults;
@@ -39,11 +40,12 @@ public class SearchPage {
     }
 
     public void productItemsInitialization() {
-        searchResults.stream().map(x -> productItems.add(new ProductItem(x))).collect(Collectors.toList());
+        //searchResults.stream().map(x -> productItems.add(new ProductItem(x))).collect(Collectors.toList());
+        searchResults.stream().map(x -> productItems1.add(x));
     }
 
-    public ArrayList<ProductItem> getProductItems() {
-        return productItems;
+    public ArrayList<WebElement> getProductItems() {
+        return productItems1;
     }
 
     public void itemsTitleHasSearchRequest(String searchString) {

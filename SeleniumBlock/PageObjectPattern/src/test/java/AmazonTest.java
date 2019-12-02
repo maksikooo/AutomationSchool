@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -22,6 +23,7 @@ public class AmazonTest {
         CartPage cartPage;
         ItemPage itemPage;
         ArrayList<ProductItem> productItems;
+        ArrayList<WebElement> productItems1;
 
         public ParameterizeTest(String searchString, int itemNumber) {
             this.searchString = searchString;
@@ -52,11 +54,12 @@ public class AmazonTest {
             HomePage home = new HomePage(driver);
             home.changeCategory(category);
             searchPage = home.searchFor(searchString);
-            productItems = searchPage.getProductItems();
+            productItems1 = searchPage.getProductItems();
             searchPage.pageTitleContainsSearchRequest(searchString);
             searchPage.itemsTitleHasSearchRequest(searchString);
-            productItems = searchPage.getProductItems();
-            itemPage = searchPage.goToItemPage(productItems.get(itemNumber));
+            ProductItem item = new ProductItem(productItems1.get(itemNumber));
+            //itemPage = searchPage.goToItemPage(productItems.get(itemNumber));
+            itemPage = searchPage.goToItemPage(productItems1.get(itemNumber));
             itemPage.addToCart();
             cartPage = itemPage.goToCart();
             cartPage.compareItemTitle(productItems.get(itemNumber));

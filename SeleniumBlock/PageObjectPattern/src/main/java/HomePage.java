@@ -11,7 +11,7 @@ public class HomePage {
     private WebElement searchFiled;
 
     @FindBy(xpath = "//form[@name='site-search']//input[@type='submit']")
-    private WebElement searchButton;
+    private WebElement searchSubmitButtonLocator;
 
     public void initElements(WebDriver driver){
         PageFactory.initElements(driver,this);
@@ -35,7 +35,7 @@ public class HomePage {
             e.printStackTrace();
         }
         searchFiled.sendKeys(searchString);
-        searchButton.click();
+        searchSubmitButtonLocator.click();
         return new SearchPage(driver);
     }
 }

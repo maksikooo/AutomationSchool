@@ -3,10 +3,10 @@ import org.openqa.selenium.support.ui.*;
 
 
 public class WaitUtils {
-    public static void waitForElementShow(WebDriver driver, By by, int duration) {
+    public static void waitForElementShow(WebDriver driver, WebElement element, int duration) {
         WebDriverWait wait = new WebDriverWait(driver, duration, 250);
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            wait.until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException ignored) {
         }
     }
@@ -14,10 +14,10 @@ public class WaitUtils {
         WebDriverWait wait = new WebDriverWait(driver, duration, 250);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
-    public static void waitUntilElementChangeAttribute(WebDriver driver,By by,String attribute,String value){
+    public static void waitUntilElementChangeAttribute(WebDriver driver,WebElement element,String attribute,String value){
         WebDriverWait wait = new WebDriverWait(driver,10);
         try {
-            wait.until(ExpectedConditions.attributeToBe(by, "cursor", "pointer"));
+            wait.until(ExpectedConditions.attributeToBe(element, attribute,value));
         } catch (StaleElementReferenceException ignored){
         }
     }

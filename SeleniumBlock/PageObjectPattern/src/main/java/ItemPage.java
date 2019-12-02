@@ -1,6 +1,9 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,36 +14,51 @@ public class ItemPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
+    @FindBy(xpath = "//span[@role='button']/span")
+    private WebElement sizeDropDownLocator;
+    @FindBy(xpath = "//ul[@role='listbox']/li[2]")
+    private WebElement dropDownSecondValue;
+    @FindBy (id = "add-to-cart-button")
+    private WebElement addToCartButtonLocator;
+    @FindBy (id = "nav-cart")
+    private WebElement cartLinkLocator;
+    @FindBy (id = "attach-sidesheet-view-cart-button")
+    private WebElement sideCartLinkLocator;
+
+    private void init(WebDriver driver){
+        PageFactory.initElements(driver,this);
+    }
+
     public ItemPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, 10);
+        init(driver);
     }
 
     public void changeSize() {
-        driver.findElement(By.xpath("//span[@role='button']/span")).click();
-        driver.findElement(By.xpath("//ul[@role='listbox']/li[2]")).click();
-        WaitUtils.waitUntilElementChangeAttribute(driver,By.id("add-to-cart-button"),"cursor","pointer");
+        sizeDropDownLocator.click();
+        dropDownSecondValue.click();
+        WaitUtils.waitUntilElementChangeAttribute(driver,addToCartButtonLocator,"cursor","pointer");
         addToCart();
     }
 
     public void addToCart() {
         if (canBeAddedToCart()) {
-            driver.findElement(By.id("add-to-cart-button")).click();
+            addToCartButtonLocator.click();
         } else changeSize();
     }
 
     public boolean canBeAddedToCart() {
-        WaitUtils.waitForElementShow(driver,By.id("add-to-cart-button"),5);
-        return !driver.findElement(By.id("add-to-cart-button")).getCssValue("cursor").equals("not-allowed");
+        WaitUtils.waitForElementShow(driver,addToCartButtonLocator,5);
+        return !addToCartButtonLocator.getCssValue("cursor").equals("not-allowed");
     }
 
     public CartPage goToCart() {
-        WaitUtils.waitForElementShow(driver,By.id("attach-sidesheet-view-cart-button"),4);
+        WaitUtils.waitForElementShow(driver,sideCartLinkLocator,4);
         try{
-            driver.findElement(By.id("attach-sidesheet-view-cart-button")).isDisplayed();
-            driver.findElement(By.id("attach-sidesheet-view-cart-button")).click();
+           sideCartLinkLocator.click();
         }catch (NoSuchElementException a){
-            driver.findElement(By.id("nav-cart")).click();
+            cartLinkLocator.click();
         }
 
         return new CartPage(driver);
