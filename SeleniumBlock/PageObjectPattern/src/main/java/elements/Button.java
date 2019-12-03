@@ -7,11 +7,6 @@ public class Button extends AbstractElement{
         super(wrappedElement);
     }
 
-
-    public void sendKeys(String s) {
-        wrappedElement.sendKeys(s);
-    }
-
     public void click() {
         wrappedElement.click();
     }

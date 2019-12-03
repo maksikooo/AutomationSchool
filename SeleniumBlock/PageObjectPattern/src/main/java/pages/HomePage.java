@@ -1,12 +1,12 @@
 package pages;
 
 import elements.Button;
+import elements.ExtendedFieldDecorator;
+import elements.TextField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class HomePage {
     private WebDriver driver;
 
     @FindBy(id = "twotabsearchtextbox")
-    private Button searchFiled;
+    private TextField searchFiled;
 
     @FindBy(xpath = "//a")
     private List<Button> searchFileds;
@@ -43,6 +43,7 @@ public class HomePage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        searchFileds.size();
         searchFiled.sendKeys(searchString);
         searchSubmitButtonLocator.click();
         return new SearchPage(driver);

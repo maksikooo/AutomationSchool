@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class DefaultElementFactory implements ElementFactory {
     @Override
-    public <E extends AbstractElement> E create(final Class<E> elementClass, final WebElement wrappedElement) {
+    public  <E extends AbstractElement> E create(final Class<E> elementClass, final WebElement wrappedElement) {
         try {
             return elementClass
                     .getDeclaredConstructor(WebElement.class)
