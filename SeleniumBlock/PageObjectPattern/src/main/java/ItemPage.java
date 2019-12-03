@@ -42,10 +42,11 @@ public class ItemPage {
         addToCart();
     }
 
-    public void addToCart() {
+    public ItemPage addToCart() {
         if (canBeAddedToCart()) {
             addToCartButtonLocator.click();
         } else changeSize();
+        return this;
     }
 
     public boolean canBeAddedToCart() {

@@ -35,30 +35,31 @@ public class SearchPage {
         productItemsInitialization();
     }
 
-    public void pageTitleContainsSearchRequest(String searchString) {
+    public SearchPage pageTitleContainsSearchRequest(String searchString) {
         assertThat(driver.getTitle().toLowerCase(), containsString(searchString));
+        return this;
     }
 
     public void productItemsInitialization() {
-        //searchResults.stream().map(x -> productItems.add(new ProductItem(x))).collect(Collectors.toList());
-        searchResults.stream().map(x -> productItems1.add(x));
+        searchResults.stream().map(x -> productItems1.add(x)).collect(Collectors.toList());
     }
 
     public ArrayList<WebElement> getProductItems() {
         return productItems1;
     }
 
-    public void itemsTitleHasSearchRequest(String searchString) {
+    public SearchPage itemsTitleHasSearchRequest(String searchString) {
         try {
             assertThat(productItems, everyItem(HasPropertyWithValue.hasProperty("itemName", is(containsString(searchString)))));
         } catch (AssertionError e) {
             e.printStackTrace();
         }
+        return this;
     }
 
-    public ItemPage goToItemPage(ProductItem productItem) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", productItem.getItemWebElement());
-        productItem.getItemWebElement().click();
+    public ItemPage goToItemPage(WebElement product) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", product);
+        product.click();
         return new ItemPage(driver);
     }
 }

@@ -22,9 +22,9 @@ public class HomePage {
         initElements(driver);
     }
 
-    public void changeCategory(String category) {
+    public HomePage changeCategory(String category) {
         driver.findElement(By.xpath(String.format("//select[@id='searchDropdownBox']//option[text()='%s']",category))).click();
-
+        return this;
     }
 
     public SearchPage searchFor(String searchString) {

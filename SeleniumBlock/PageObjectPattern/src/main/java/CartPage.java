@@ -27,15 +27,17 @@ public class CartPage {
         init(driver);
     }
 
-    public void compareItemTitle(ProductItem productItem) {
+    public CartPage compareItemTitle(ProductItem productItem) {
         try{
             assertThat(productTitleLocator.getText().toLowerCase(), equalTo(productItem.getItemName()));
         }catch (AssertionError error){
             error.printStackTrace();
         }
+        return this;
     }
 
-    public void compareItemPrice(ProductItem productItem) {
+    public CartPage compareItemPrice(ProductItem productItem) {
         assertThat(ProductUtils.parsePrice(itemPriceLocator),equalTo(productItem.getItemPrice()));
+        return this;
     }
 }
