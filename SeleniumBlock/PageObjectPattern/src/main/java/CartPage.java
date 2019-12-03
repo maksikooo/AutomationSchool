@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class CartPage {
+public class CartPage{
     private final WebDriver driver;
 
     @FindBy(className = "sc-product-title")
