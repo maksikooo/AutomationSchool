@@ -51,24 +51,6 @@ public class AmazonTest {
         public void AmazonItemDetailsTest() {
             driver.get("https://www.amazon.com/");
             driver.get("https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dbaby-products-intl-ship&field-keywords=");
-            HomePage home = new HomePage(driver);
-            home.changeCategory(category);
-            searchPage = home.searchFor(searchString);
-            productItems1 = searchPage.getProductItems();
-            searchPage.pageTitleContainsSearchRequest(searchString);
-            searchPage.itemsTitleHasSearchRequest(searchString);
-            ProductItem item = new ProductItem(productItems1.get(itemNumber));
-            itemPage = searchPage.goToItemPage(productItems1.get(itemNumber));
-            itemPage.addToCart();
-            cartPage = itemPage.goToCart();
-            cartPage.compareItemTitle(item);
-            cartPage.compareItemPrice(item);
-        }
-
-        @Test
-        public void AmazonTest(){
-            driver.get("https://www.amazon.com/");
-            driver.get("https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dbaby-products-intl-ship&field-keywords=");
             productItems1 = new HomePage(driver).changeCategory(category)
                     .searchFor(searchString)
                     .pageTitleContainsSearchRequest(searchString)
