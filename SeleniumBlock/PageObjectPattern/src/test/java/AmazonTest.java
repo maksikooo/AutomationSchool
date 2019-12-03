@@ -1,3 +1,8 @@
+import pages.CartPage;
+import pages.HomePage;
+import pages.ItemPage;
+import pages.SearchPage;
+import productItem.ProductItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -6,7 +11,6 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
