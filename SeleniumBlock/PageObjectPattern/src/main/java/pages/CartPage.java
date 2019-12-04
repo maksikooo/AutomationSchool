@@ -1,5 +1,6 @@
 package pages;
 
+import elements.ProductContainer;
 import productItem.ProductItem;
 import utils.ProductUtils;
 import org.hamcrest.MatcherAssert;
@@ -29,17 +30,17 @@ public class CartPage{
         init(driver);
     }
 
-    public CartPage compareItemTitle(ProductItem productItem) {
+    public CartPage compareItemTitle(ProductContainer productItem) {
         try{
-            MatcherAssert.assertThat(productTitleLocator.getText().toLowerCase(), equalTo(productItem.getItemName()));
+            MatcherAssert.assertThat(productTitleLocator.getText().toLowerCase(), equalTo(productItem.getProductName()));
         }catch (AssertionError error){
             error.printStackTrace();
         }
         return this;
     }
 
-    public CartPage compareItemPrice(ProductItem productItem) {
-        MatcherAssert.assertThat(ProductUtils.parsePrice(itemPriceLocator),equalTo(productItem.getItemPrice()));
+    public CartPage compareItemPrice(ProductContainer productItem) {
+        MatcherAssert.assertThat(ProductUtils.parsePrice(itemPriceLocator),equalTo(productItem.getProductPrice()));
         return this;
     }
 }

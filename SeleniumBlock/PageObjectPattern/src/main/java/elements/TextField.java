@@ -9,9 +9,9 @@ public class TextField extends AbstractElement {
     }
 
     public void clear(){
-        wrappedElement.clear();
+        getWrappedElement().clear();
     }
     public void sendKeys(String context){
-        wrappedElement.sendKeys(context);
+        getWrappedElement().sendKeys(context);
     }
 }

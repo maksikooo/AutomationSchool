@@ -8,6 +8,6 @@ public class Button extends AbstractElement{
     }
 
     public void click() {
-        wrappedElement.click();
+        getWrappedElement().click();
     }
 }

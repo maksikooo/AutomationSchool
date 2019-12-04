@@ -4,14 +4,14 @@ import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class DefaultElementFactory implements ElementFactory {
+public class DefaultContainerFactory implements ContainerFactory{
     @Override
-    public <E extends AbstractElement> E create(final Class<E> elementClass, final WebElement wrappedElement) {
+    public  <E extends AbstractContainer> E create(final Class<E> elementClass, final WebElement wrappedElement) {
         try {
-            E element = elementClass
+            E container = elementClass
                     .getDeclaredConstructor(WebElement.class)
                     .newInstance(wrappedElement);
-            return element;
+            return container;
         } catch (InstantiationException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -23,4 +23,3 @@ public class DefaultElementFactory implements ElementFactory {
         }
     }
 }
-

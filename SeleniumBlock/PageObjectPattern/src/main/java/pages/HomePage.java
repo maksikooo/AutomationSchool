@@ -14,10 +14,7 @@ public class HomePage {
     private WebDriver driver;
 
     @FindBy(id = "twotabsearchtextbox")
-    private TextField searchFiled;
-
-    @FindBy(xpath = "//a")
-    private List<Button> searchFileds;
+    private TextField searchField;
 
     @FindBy(xpath = "//form[@name='site-search']//input[@type='submit']")
     private Button searchSubmitButtonLocator;
@@ -43,8 +40,7 @@ public class HomePage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        searchFileds.size();
-        searchFiled.sendKeys(searchString);
+        searchField.sendKeys(searchString);
         searchSubmitButtonLocator.click();
         return new SearchPage(driver);
     }
