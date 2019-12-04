@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.ProductUtils;
 
-public class ProductContainer extends AbstractContainer {
+public class ProductContainer extends Element {
 
     @FindBy(xpath = ".//span[contains(@class,'a-size-base-plus')]")
     private Link productName;

@@ -2,7 +2,7 @@ package elements;
 
 import org.openqa.selenium.WebElement;
 
-public class Link extends AbstractElement {
+public class Link extends Element {
     protected Link(WebElement wrappedElement) {
         super(wrappedElement);
     }

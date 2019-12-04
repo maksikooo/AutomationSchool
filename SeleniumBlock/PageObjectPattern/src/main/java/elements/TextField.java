@@ -2,7 +2,7 @@ package elements;
 
 import org.openqa.selenium.WebElement;
 
-public class TextField extends AbstractElement {
+public class TextField extends Element {
 
     protected TextField(WebElement wrappedElement) {
         super(wrappedElement);

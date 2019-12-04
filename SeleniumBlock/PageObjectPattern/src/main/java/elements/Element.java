@@ -1,13 +1,14 @@
 package elements;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public abstract class AbstractContainer {
+
+public abstract class Element {
     private WebElement wrappedElement;
-    public AbstractContainer(final WebElement wrappedElement){
-        this.wrappedElement = wrappedElement;
-    }
+
+    protected Element(final WebElement wrappedElement){this.wrappedElement = wrappedElement;}
+
+    public boolean isDisplayed(){return wrappedElement.isDisplayed();}
 
     public WebElement getWrappedElement() {
         return wrappedElement;

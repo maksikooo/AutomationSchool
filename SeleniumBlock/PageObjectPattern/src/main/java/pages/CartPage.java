@@ -30,17 +30,17 @@ public class CartPage{
         init(driver);
     }
 
-    public CartPage compareItemTitle(ProductContainer productItem) {
+    public CartPage compareItemTitle(String productName) {
         try{
-            MatcherAssert.assertThat(productTitleLocator.getText().toLowerCase(), equalTo(productItem.getProductName()));
+            MatcherAssert.assertThat(productTitleLocator.getText().toLowerCase(), equalTo(productName));
         }catch (AssertionError error){
             error.printStackTrace();
         }
         return this;
     }
 
-    public CartPage compareItemPrice(ProductContainer productItem) {
-        MatcherAssert.assertThat(ProductUtils.parsePrice(itemPriceLocator),equalTo(productItem.getProductPrice()));
+    public CartPage compareItemPrice(Float productPrice) {
+        MatcherAssert.assertThat(ProductUtils.parsePrice(itemPriceLocator),equalTo(productPrice));
         return this;
     }
 }

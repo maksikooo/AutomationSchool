@@ -5,18 +5,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ProductItem {
-    private String itemName;
-    private float itemPrice;
+    private String productName;
+    private float productPrice;
 
-    public ProductItem(WebElement element) {
-        itemPrice = ProductUtils.parsePrice(element.findElement(By.xpath(".//span[@class='a-offscreen' or @class='a-color-base']")));
-        itemName = element.findElement(By.xpath(".//span[contains(@class,'a-size-base-plus')]")).getText().toLowerCase();
+    public ProductItem(String productName,Float productPrice) {
+        this.productName = productName;
+        this.productPrice = productPrice;
     }
 
-    public float getItemPrice() { return itemPrice; }
+    public float getItemPrice() { return productPrice; }
 
     public String getItemName() {
-        return itemName;
+        return productName;
     }
+
 
 }

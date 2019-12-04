@@ -1,3 +1,4 @@
+import elements.Element;
 import elements.ProductContainer;
 import org.junit.After;
 import org.junit.Before;
@@ -20,8 +21,7 @@ public class AmazonTest {
     @RunWith(Parameterized.class)
     public static class ParameterizeTest {
         String category = "Baby";
-        ArrayList<WebElement> productItems1;
-        List<ProductContainer> productContainerList;
+        List<ProductItem> productItems;
         private String searchString;
         private int itemNumber;
         private WebDriver driver;
@@ -56,13 +56,13 @@ public class AmazonTest {
                     .searchFor(searchString)
                     .pageTitleContainsSearchRequest(searchString)
                     .itemsTitleHasSearchRequest(searchString);
-            productContainerList = onSearchPage.getProductItems();
-            ProductContainer item = productContainerList.get(itemNumber);
-            onSearchPage.goToItemPage(item)
+            productItems = onSearchPage.getProductItems();
+
+            onSearchPage.goToItemPage(itemNumber)
                     .addToCart()
                     .goToCart()
-                    .compareItemPrice(item)
-                    .compareItemTitle(item);
+                    .compareItemPrice(productItems.get(itemNumber).getItemPrice())
+                    .compareItemTitle(productItems.get(itemNumber).getItemName());
         }
 
         @After
