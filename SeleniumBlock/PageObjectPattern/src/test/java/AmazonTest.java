@@ -1,3 +1,5 @@
+import elements.Element;
+import elements.ProductContainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -6,24 +8,23 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import pages.HomePage;
+import pages.SearchPage;
+import productItem.ProductItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AmazonTest {
     @RunWith(Parameterized.class)
     public static class ParameterizeTest {
+        String category = "Baby";
+        List<ProductItem> productItems;
         private String searchString;
         private int itemNumber;
         private WebDriver driver;
-        String category = "Baby";
-        SearchPage searchPage;
-        CartPage cartPage;
-        ItemPage itemPage;
-        ArrayList<ProductItem> productItems;
-        ArrayList<WebElement> productItems1;
 
         public ParameterizeTest(String searchString, int itemNumber) {
             this.searchString = searchString;
@@ -43,7 +44,7 @@ public class AmazonTest {
             System.setProperty("webdriver.chrome.driver", "src/tools/chromedriver.exe");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
-            driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         }
 
 
@@ -51,17 +52,17 @@ public class AmazonTest {
         public void AmazonItemDetailsTest() {
             driver.get("https://www.amazon.com/");
             driver.get("https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dbaby-products-intl-ship&field-keywords=");
-            productItems1 = new HomePage(driver).changeCategory(category)
+            SearchPage onSearchPage = new HomePage(driver).changeCategory(category)
                     .searchFor(searchString)
                     .pageTitleContainsSearchRequest(searchString)
-                    .itemsTitleHasSearchRequest(searchString)
-                    .itemsTitleHasSearchRequest(searchString).getProductItems();
-            ProductItem item = new ProductItem(productItems1.get(itemNumber));
-            new SearchPage(driver).goToItemPage(productItems1.get(itemNumber))
+                    .itemsTitleHasSearchRequest(searchString);
+            productItems = onSearchPage.getProductItems();
+
+            onSearchPage.goToItemPage(itemNumber)
                     .addToCart()
                     .goToCart()
-                    .compareItemPrice(item)
-                    .compareItemTitle(item);
+                    .compareItemPrice(productItems.get(itemNumber).getItemPrice())
+                    .compareItemTitle(productItems.get(itemNumber).getItemName());
         }
 
         @After
