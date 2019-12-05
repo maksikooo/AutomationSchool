@@ -47,7 +47,6 @@ public class AmazonTest {
             driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         }
 
-
         @Test
         public void AmazonItemDetailsTest() {
             driver.get("https://www.amazon.com/");

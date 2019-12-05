@@ -2,6 +2,7 @@ package utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
+import pages.HomePage;
 
 
 public class WaitUtils {
@@ -16,6 +17,7 @@ public class WaitUtils {
         WebDriverWait wait = new WebDriverWait(driver, duration, 250);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+
     public static void waitUntilElementChangeAttribute(WebDriver driver,WebElement element,String attribute,String value){
         WebDriverWait wait = new WebDriverWait(driver,10);
         try {

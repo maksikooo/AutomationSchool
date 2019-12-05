@@ -1,8 +1,12 @@
 package pages;
+import static matchers.ElementMatcher.elementIsDisplayed;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import elements.Button;
 import elements.ExtendedFieldDecorator;
 import elements.TextField;
+
+import matchers.ElementMatcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -19,10 +23,12 @@ public class HomePage {
     @FindBy(xpath = "//form[@name='site-search']//input[@type='submit']")
     private Button searchSubmitButtonLocator;
 
-    public void initElements(WebDriver driver){
+    private void initElements(WebDriver driver){
         PageFactory.initElements(new ExtendedFieldDecorator(driver), this);
     }
-
+    public WebDriver getDriver(){
+        return driver;
+    }
     public HomePage(WebDriver driver) {
         this.driver = driver;
         initElements(driver);
@@ -41,6 +47,7 @@ public class HomePage {
             e.printStackTrace();
         }
         searchField.sendKeys(searchString);
+        assertThat(searchSubmitButtonLocator.getWrappedElement(),elementIsDisplayed());
         searchSubmitButtonLocator.click();
         return new SearchPage(driver);
     }
