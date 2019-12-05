@@ -57,9 +57,8 @@ public class SearchPage {
         return this;
     }
 
-    public ItemPage goToItemPage(int itemNumber) {
-        searchResults.get(itemNumber).scrollToProduct(driver);
-        searchResults.get(itemNumber).clickOnProduct();
-        return new ItemPage(driver);
+    public ProductPage goToItemPage(int itemNumber) {
+        searchResults.get(itemNumber).scrollToProduct(driver).clickOnProduct();
+        return new ProductPage(driver);
     }
 }

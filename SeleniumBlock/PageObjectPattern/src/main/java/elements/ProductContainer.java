@@ -31,7 +31,8 @@ public class ProductContainer extends Element {
     }
 
 
-    public void scrollToProduct(WebDriver driver){
+    public ProductContainer scrollToProduct(WebDriver driver) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", getWrappedElement());
+        return this;
     }
 }

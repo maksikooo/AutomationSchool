@@ -2,16 +2,17 @@ package elements;
 
 import org.openqa.selenium.WebElement;
 
-public class TextField extends Element {
+public class TextInputField extends Element {
 
-    protected TextField(WebElement wrappedElement) {
+    protected TextInputField(WebElement wrappedElement) {
         super(wrappedElement);
     }
 
-    public void clear(){
+    public void clear() {
         getWrappedElement().clear();
     }
-    public void sendKeys(String context){
+
+    public void sendKeys(String context) {
         getWrappedElement().sendKeys(context);
     }
 }

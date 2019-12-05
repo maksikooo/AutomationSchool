@@ -8,13 +8,29 @@ import org.openqa.selenium.WebElement;
 
 
 public class ElementMatcher extends TypeSafeMatcher<WebElement> {
+    private int timeout = 5;
+
+    public ElementMatcher(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public ElementMatcher() {
+    }
+
+    public static Matcher<WebElement> elementIsDisplayed() {
+        return new ElementMatcher();
+    }
+
+    public static Matcher<WebElement> elementIsDisplayed(int timeout) {
+        return new ElementMatcher(timeout);
+    }
 
     @Override
     protected boolean matchesSafely(WebElement element) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < timeout * 2; i++) {
             try {
                 return element.isDisplayed();
-            } catch (NoSuchElementException e) {
+            } catch (NoSuchElementException ignored) {
             }
             try {
                 Thread.sleep(500);
@@ -33,10 +49,6 @@ public class ElementMatcher extends TypeSafeMatcher<WebElement> {
     @Override
     protected void describeMismatchSafely(WebElement item, Description mismatchDescription) {
         mismatchDescription.appendValue(item).appendText(" element not displayed");
-    }
-
-    public static Matcher<WebElement> elementIsDisplayed(){
-        return new ElementMatcher();
     }
 }
 
